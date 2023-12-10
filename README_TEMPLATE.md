@@ -1,10 +1,7 @@
-# n8n-nodes-_node-name_
+# n8n-nodes-powerlink
 
-This is an n8n community node. It lets you use _app/service name_ in your n8n workflows.
+Encapsulate the API of [Powerlink](https://www.powerlink.co.il) to allow easy access.
 
-_App/service name_ is _one or two sentences describing the service this node integrates with_.
-
-[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
 [Installation](#installation)  
 [Operations](#operations)  

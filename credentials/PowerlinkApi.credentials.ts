@@ -1,5 +1,4 @@
 import {
-  IAuthenticateGeneric,
   ICredentialType,
   INodeProperties,
 } from "n8n-workflow";
@@ -7,8 +6,7 @@ import {
 export class PowerlinkApi implements ICredentialType {
   name = "powerlinkApi";
   displayName = "Powerlink API";
-  // Uses the link to this tutorial as an example
-  // Replace with your own docs links when building your own nodes
+  icon = 'file:powerlink.svg';
   documentationUrl =
     "https://docs.n8n.io/integrations/creating-nodes/build/declarative-style-node/";
   properties: INodeProperties[] = [
@@ -20,12 +18,4 @@ export class PowerlinkApi implements ICredentialType {
       default: "",
     },
   ];
-  authenticate: IAuthenticateGeneric = {
-    type: "generic",
-    properties: {
-      qs: {
-        api_key: "={{$credentials.apiKey}}",
-      },
-    },
-  };
 }

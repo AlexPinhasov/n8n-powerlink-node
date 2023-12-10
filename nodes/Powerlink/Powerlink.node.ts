@@ -20,8 +20,8 @@ export class Powerlink implements INodeType {
     icon: "file:powerlink.svg",
     group: ["transform"],
     version: 1,
-    subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-    description: "Get data from NASAs API",
+    subtitle: "0.1.10",
+    description: "Get data from Powerlink API",
     defaults: {
       name: "Powerlink",
     },
@@ -29,17 +29,10 @@ export class Powerlink implements INodeType {
     outputs: ["main"],
     credentials: [
       {
-        name: "PowerlinkApi",
+        name: "powerlinkApi",
         required: true,
       },
     ],
-    requestDefaults: {
-      baseURL: "https://api.nasa.gov",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    },
     properties: [
       {
         displayName: "Action",
@@ -220,6 +213,19 @@ export class Powerlink implements INodeType {
         },
         description: "Enter a comment to be added to the record",
       },
+      {
+        displayName: "Owner ID",
+        name: "ownerid",
+        type: "string",
+        description: "The ID of the powerlink user agent, to act as the task reporter",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            action: ["addTask"],
+          },
+        },
+      },
     ],
   };
 
@@ -233,7 +239,7 @@ export class Powerlink implements INodeType {
       0
     ) as boolean;
     const message = this.getNodeParameter("message", 0, "") as string;
-    const credentials = await this.getCredentials("PowerlinkApi");
+    const credentials = await this.getCredentials("powerlinkApi");
     const queryParams = this.getNodeParameter(
       "fieldsUi.fieldValues",
       0,
@@ -246,12 +252,14 @@ export class Powerlink implements INodeType {
     try {
       switch (action) {
         case "addTask":
+          const ownerid = this.getNodeParameter("ownerid", 0, '') as string;
           request = handleAddTask(
             `${baseURL}/v2/record/10`,
-            objectType,
-            objectId,
-            message,
-            credentials
+              ownerid,
+              objectType,
+              objectId,
+              message,
+              credentials
           );
           responseData = (await request).data;
           break;
@@ -345,13 +353,14 @@ export class Powerlink implements INodeType {
 
     function handleAddTask(
       url: string,
+      ownerid: string,
       objectType: number,
       objectId: string,
       message: string,
       credentials: ICredentialDataDecryptedObject
     ) {
       const dictionary: { [key: string]: any } = {
-        ownerid: "6AAC4291-A975-4129-8226-B63E291574CD",
+        ownerid: ownerid,
         scheduledend: new Date(),
         subject: message,
         objectid: objectId,
