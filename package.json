@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-powerlink",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "This node encapsulate the Powerlink API",
   "keywords": [
     "n8n-community-node-package"

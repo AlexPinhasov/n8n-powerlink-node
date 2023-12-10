@@ -20,7 +20,7 @@ export class Powerlink implements INodeType {
     icon: "file:powerlink.svg",
     group: ["transform"],
     version: 1,
-    subtitle: "0.1.10",
+    subtitle: "0.1.11",
     description: "Get data from Powerlink API",
     defaults: {
       name: "Powerlink",
@@ -161,6 +161,32 @@ export class Powerlink implements INodeType {
           "Enter the fields to retrieve (comma-separated). Use * for all fields.",
       },
       {
+        displayName: "Message",
+        name: "message",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            action: ["addTask", "addComment"],
+          },
+        },
+        description: "Enter a comment to be added to the record",
+      },
+      {
+        displayName: "Owner ID",
+        name: "ownerid",
+        type: "string",
+        description: "The ID of the powerlink user agent, to act as the task reporter",
+        default: "",
+        required: true,
+        displayOptions: {
+          show: {
+            action: ["addTask"],
+          },
+        },
+      },
+      {
         displayName: "Query Parameters",
         name: "fieldsUi",
         placeholder: "Add Field",
@@ -199,32 +225,6 @@ export class Powerlink implements INodeType {
         description: "Whether Should return only the data without columns",
         type: "boolean",
         default: true,
-      },
-      {
-        displayName: "Message",
-        name: "message",
-        type: "string",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            action: ["addTask", "addComment"],
-          },
-        },
-        description: "Enter a comment to be added to the record",
-      },
-      {
-        displayName: "Owner ID",
-        name: "ownerid",
-        type: "string",
-        description: "The ID of the powerlink user agent, to act as the task reporter",
-        default: "",
-        required: true,
-        displayOptions: {
-          show: {
-            action: ["addTask"],
-          },
-        },
       },
     ],
   };
